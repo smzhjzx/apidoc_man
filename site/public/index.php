@@ -25,11 +25,23 @@ try {
     // Create a DI
     $di = new FactoryDefault();
 
+    // Setup the database service
+    $di->set('db', function () {
+        return new DbAdapter([
+            'host' => 'localhost',
+            'username' => 'root',
+            'password' => 'root',
+            'dbname' => 'apidoc_man'
+        ]);
+    });
+
     // Setup the volt component
     $di->set('volt', function ($view, $di) {
         $volt = new Volt($view, $di);
         $volt->setOptions([
             'compiledPath' => 'D:/xampp/htdocs/apidoc_man/site/app/cache/',
+            'stat' => true,
+            'compileAlways' => true
         ]);
         return $volt;
     });
@@ -45,7 +57,7 @@ try {
     // Setup a base URI so that all generated URIs include the "tutorial" folder
     $di->set('url', function () {
         $url = new UrlProvider();
-        $url->setBaseUri('/apidoc_man/');
+        $url->setBaseUri('/apidoc_man/site/');
         return $url;
     });
 

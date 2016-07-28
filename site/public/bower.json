@@ -1,0 +1,21 @@
+{
+  "name": "apidoc_man",
+  "homepage": "https://github.com/smzhjzx/apidoc_man",
+  "authors": [
+    "smzhjzx <smzhjzx@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.7"
+  }
+}

@@ -8,7 +8,6 @@
 
 use Phalcon\Mvc\Controller;
 
-class BaseController extends Controller
+class ControllerBase extends Controller
 {
-
 }
