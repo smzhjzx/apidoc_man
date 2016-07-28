@@ -19,8 +19,14 @@ try {
     $loader = new Loader();
     $loader->registerDirs(array(
         '../app/controllers/',
-        '../app/models/'
+        '../app/models/',
+        '../../common/app/models/'
     ))->register();
+
+    $loader->registerNamespaces([
+        'common\\services' => '../../common/app/services/',
+        'common\\models' => '../../common/app/models/',
+    ]);
 
     // Create a DI
     $di = new FactoryDefault();
@@ -57,7 +63,7 @@ try {
     // Setup a base URI so that all generated URIs include the "tutorial" folder
     $di->set('url', function () {
         $url = new UrlProvider();
-        $url->setBaseUri('/apidoc_man/site/');
+        $url->setBaseUri('/apidoc_man/');
         return $url;
     });
 
