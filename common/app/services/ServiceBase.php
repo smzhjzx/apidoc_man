@@ -20,6 +20,9 @@ class ServiceBase
     {
     }
 
+    /**
+     * @return static
+     */
     public static function getInstance()
     {
         $clsName = get_called_class();

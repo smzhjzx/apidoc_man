@@ -37,4 +37,9 @@ class ProjectService extends ServiceBase
     {
         return \Project::findFirst($id);
     }
+
+    public function delete($id)
+    {
+        $this->get($id)->delete();
+    }
 }

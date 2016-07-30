@@ -31,19 +31,37 @@ class Unit extends \common\models\ModelBase
      *
      * @var string
      */
-    public $parameter;
+    public $request_parameter;
 
     /**
      *
      * @var string
      */
-    public $success;
+    public $error_response;
+
+    /**
+     *
+     * @var string
+     */
+    public $success_parameter;
 
     /**
      *
      * @var string
      */
     public $success_response;
+
+    /**
+     *
+     * @var string
+     */
+    public $url;
+
+    /**
+     *
+     * @var string
+     */
+    public $type;
 
     /**
      *
@@ -82,5 +100,4 @@ class Unit extends \common\models\ModelBase
     {
         return parent::findFirst($parameters);
     }
-
 }

@@ -12,20 +12,24 @@ use Phalcon\Mvc\Application;
 use Phalcon\Di\FactoryDefault;
 use Phalcon\Mvc\Url as UrlProvider;
 use Phalcon\Db\Adapter\Pdo\Mysql as DbAdapter;
+use Phalcon\Config;
 
 try {
+    $baseUri = '/apidoc_man/site/';
 
     // Register an autoloader
     $loader = new Loader();
     $loader->registerDirs(array(
         '../app/controllers/',
         '../app/models/',
-        '../../common/app/models/'
+        '../../common/app/models/',
+        '../../common/app/utils/',
     ))->register();
 
     $loader->registerNamespaces([
         'common\\services' => '../../common/app/services/',
         'common\\models' => '../../common/app/models/',
+        'common\\utils' => '../../common/app/utils/',
     ]);
 
     // Create a DI
@@ -49,6 +53,8 @@ try {
             'stat' => true,
             'compileAlways' => true
         ]);
+        $compiler = $volt->getCompiler();
+        $compiler->addFunction('json_encode', 'json_encode');
         return $volt;
     });
 
@@ -61,11 +67,13 @@ try {
     });
 
     // Setup a base URI so that all generated URIs include the "tutorial" folder
-    $di->set('url', function () {
+    $di->set('url', function () use ($baseUri) {
         $url = new UrlProvider();
-        $url->setBaseUri('/apidoc_man/');
+        $url->setBaseUri($baseUri);
         return $url;
     });
+
+    $di->setShared('config', new Config(['baseUri' => $baseUri]));
 
     $application = new Application($di);
 

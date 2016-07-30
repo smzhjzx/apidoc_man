@@ -32,7 +32,17 @@ class GroupService extends ServiceBase
 
     public function update($id, $data)
     {
-        $item = \Group::findFirst($id);
+        $item = $this->get($id);
         $item->update($data);
+    }
+
+    public function get($id)
+    {
+        return \Project::findFirst($id);
+    }
+
+    public function delete($id)
+    {
+        $this->get($id)->delete();
     }
 }
