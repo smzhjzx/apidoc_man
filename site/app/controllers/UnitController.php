@@ -13,15 +13,14 @@ class UnitController extends ControllerBase
 {
     public function createAction()
     {
-        $data = $_POST;
-        $data['request_parameter'] = json_encode($data['request_parameter']);
+        $data = $this->transferData($_POST);
         $item = UnitService::getInstance()->create($data);
         return Result::success($item);
     }
 
     public function updateAction($id)
     {
-        $data = $_POST;
+        $data = $this->transferData($_POST);
         UnitService::getInstance()->update($id, $data);
         return Result::success();
     }
@@ -30,5 +29,18 @@ class UnitController extends ControllerBase
     {
         UnitService::getInstance()->delete($id);
         return Result::success();
+    }
+
+    public function getAction($id)
+    {
+        $item = UnitService::getInstance()->get($id);
+        $item = UnitService::getInstance()->transferData($item);
+        return Result::success($item);
+    }
+
+    private function transferData($data)
+    {
+        $data['request_parameter'] = json_encode($data['request_parameter']);
+        return $data;
     }
 }

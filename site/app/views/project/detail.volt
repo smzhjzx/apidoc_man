@@ -23,7 +23,9 @@
 {% endblock %}
 
 {% block js %}
+    <script src="public/js/project/detail.js"></script>
     <script src="public/js/project/partial/sidenav.js"></script>
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?skin=sunburst"></script>
     <script>
         window.projectId = '{{ project.id }}';
         window.emptyUnit = {{ json_encode(emptyUnit) }};

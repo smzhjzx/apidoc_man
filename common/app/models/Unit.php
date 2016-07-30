@@ -61,6 +61,12 @@ class Unit extends \common\models\ModelBase
      *
      * @var string
      */
+    public $url_example;
+
+    /**
+     *
+     * @var string
+     */
     public $type;
 
     /**

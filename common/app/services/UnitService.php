@@ -44,7 +44,7 @@ class UnitService extends ServiceBase
 
     public function get($id)
     {
-        return \Project::findFirst($id);
+        return \Unit::findFirst($id);
     }
 
     public function delete($id)

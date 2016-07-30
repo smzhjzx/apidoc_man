@@ -8,7 +8,19 @@
         <p>{{ unit.description }}</p>
     {% endif %}
 
-    <pre class="prettyprint language-html" data-type="{{ unit.type }}"><code>{{ unit.url }}</code></pre>
+    <pre class="prettyprint lang-html">{{ unit.url }}</pre>
+
+    <ul class="nav nav-tabs nav-tabs-examples">
+        <li class="active">
+            <a>请求示例</a>
+        </li>
+    </ul>
+
+    <div class="tab-content">
+        <div class="tab-pane active">
+            <pre class="prettyprint lang-html">{{ unit.url_example }}</pre>
+        </div>
+    </div>
 
     <h2>请求参数</h2>
     <table>
@@ -31,7 +43,7 @@
     </table>
 
 
-    <h2>Success 200</h2>
+    <h2>成功 200</h2>
     <table>
         <thead>
         <tr>
@@ -53,14 +65,13 @@
 
     <ul class="nav nav-tabs nav-tabs-examples">
         <li class="active">
-            <a href="#success-examples-User-GetUser-0_0_0-0">返回示例：</a>
+            <a>返回示例：</a>
         </li>
     </ul>
 
     <div class="tab-content">
-        <div class="tab-pane active" id="success-examples-User-GetUser-0_0_0-0">
-            <pre style="" class="prettyprint language-json prettyprinted"
-                 data-type="json"><code>{{ unit.success_response }}</code></pre>
+        <div class="tab-pane active">
+            <pre class="prettyprint lang-json">{{ unit.success_response }}</pre>
         </div>
     </div>
 </article>

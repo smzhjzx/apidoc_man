@@ -38,7 +38,7 @@ class GroupService extends ServiceBase
 
     public function get($id)
     {
-        return \Project::findFirst($id);
+        return \Group::findFirst($id);
     }
 
     public function delete($id)
