@@ -14,20 +14,20 @@ class GroupController extends ControllerBase
     public function createAction()
     {
         $data = $_POST;
-        $item = GroupService::getInstance()->create($data);
+        $item = GroupService::singleton()->create($data);
         return Result::success($item);
     }
 
     public function updateAction($id)
     {
         $data = $_POST;
-        GroupService::getInstance()->update($id, $data);
+        GroupService::singleton()->update($id, $data);
         return Result::success();
     }
 
     public function deleteAction($id)
     {
-        GroupService::getInstance()->delete($id);
+        GroupService::singleton()->delete($id);
         return Result::success();
     }
 }

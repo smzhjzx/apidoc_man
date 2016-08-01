@@ -15,43 +15,43 @@ class ProjectController extends ControllerBase
 {
     public function listAction()
     {
-        $result = ProjectService::getInstance()->find();
+        $result = ProjectService::singleton()->find();
         $this->view->projects = $result;
     }
 
-    public function detailAction($projectId)
+    public function detailAction($id)
     {
-        $project = ProjectService::getInstance()->get($projectId);
-        $groups = GroupService::getInstance()->find(['project_id' => $projectId]);
+        $project = ProjectService::singleton()->get($id);
+        $groups = GroupService::singleton()->find(['project_id' => $id]);
 
         $all = [];
         foreach ($groups as $group) {
-            $group->units = UnitService::getInstance()->find(['group_id' => $group->id]);
+            $group->units = UnitService::singleton()->find(['group_id' => $group->id]);
             $all[] = $group;
         }
 
         $this->view->project = $project;
         $this->view->groups = $all;
-        $this->view->emptyUnit = UnitService::getInstance()->transferData(new Unit());
+        $this->view->emptyUnit = UnitService::singleton()->transform(new Unit());
     }
 
     public function createAction()
     {
         $data = $_POST;
-        $item = ProjectService::getInstance()->create($data);
+        $item = ProjectService::singleton()->create($data);
         return Result::success($item);
     }
 
     public function updateAction($id)
     {
         $data = $_POST;
-        ProjectService::getInstance()->update($id, $data);
+        ProjectService::singleton()->update($id, $data);
         return Result::success();
     }
 
     public function deleteAction($id)
     {
-        ProjectService::getInstance()->delete($id);
+        ProjectService::singleton()->delete($id);
         return Result::success();
     }
 }

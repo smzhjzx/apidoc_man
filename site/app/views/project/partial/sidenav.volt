@@ -97,8 +97,10 @@
                         <label>请求示例</label>
                         <input ms-duplex="@unit.url_example" class="form-control" required>
                     </div>
+                    {% include 'project/partial/params' with ['title':'请求参数'] %}
+
                     <div class="panel panel-default">
-                        <div class="panel-heading">请求参数</div>
+                        <div class="panel-heading">成功返回参数</div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
                             <div class="table-responsive">
@@ -112,13 +114,13 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr ms-for="(index,p) in @request_parameter">
+                                    <tr ms-for="(index,p) in @success_parameter">
                                         <td><input ms-duplex="p.field" class="form-control" ms-rules="{required:true}">
                                         </td>
                                         <td><input ms-duplex="p.type" class="form-control" required></td>
                                         <td><input ms-duplex="p.description" class="form-control"></td>
                                         <td>
-                                            <button class="btn btn-primary" ms-click="@removeParam(index)">移除</button>
+                                            <button class="btn btn-primary" ms-click="@removeParam(index,'success')">移除</button>
                                         </td>
                                     </tr>
                                     <tr>
@@ -126,7 +128,7 @@
                                         <td></td>
                                         <td></td>
                                         <td>
-                                            <button ms-click="@addRequestParameter()" class="btn btn-primary">添加参数
+                                            <button ms-click="@addParam('success')" class="btn btn-primary">添加参数
                                             </button>
                                         </td>
                                     </tr>
@@ -137,6 +139,7 @@
                         </div>
                         <!-- /.panel-body -->
                     </div>
+
                     <div class="form-group">
                         <label>返回数据</label>
                         <textarea ms-duplex="@unit.success_response" class="form-control" rows="3" required></textarea>

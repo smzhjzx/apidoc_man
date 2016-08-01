@@ -8,6 +8,8 @@
 namespace common\services;
 
 
+use common\utils\Json;
+
 class UnitService extends ServiceBase
 {
     public function find($params)
@@ -24,7 +26,7 @@ class UnitService extends ServiceBase
         ]);
         $all = [];
         foreach ($result as $item) {
-            $all[] = $this->transferData($item);
+            $all[] = $this->transform($item);
         }
         return (Object)$all;
     }
@@ -52,7 +54,7 @@ class UnitService extends ServiceBase
         $this->get($id)->delete();
     }
 
-    public function transferData(\Unit $item)
+    public function transform(\Unit $item)
     {
         $item = $item->toArray();
         foreach ($item as $key => $value) {
@@ -60,16 +62,8 @@ class UnitService extends ServiceBase
                 $item[$key] = '';
             }
         }
-        if (empty($item['request_parameter'])) {
-            $item['request_parameter'] = [];
-        } else {
-            $item['request_parameter'] = json_decode($item['request_parameter']);
-        }
-        if (empty($item['success_parameter'])) {
-            $item['success_parameter'] = [];
-        } else {
-            $item['success_parameter'] = json_decode($item['success_parameter']);
-        }
+        $item['request_parameter'] = Json::decode($item['request_parameter']);
+        $item['success_parameter'] = Json::decode($item['success_parameter']);
         return (Object)$item;
     }
 }

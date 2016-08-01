@@ -23,7 +23,7 @@ class ServiceBase
     /**
      * @return static
      */
-    public static function getInstance()
+    public static function singleton()
     {
         $clsName = get_called_class();
         if (!isset(static::$instances[$clsName])) {

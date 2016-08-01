@@ -2,36 +2,36 @@
  * Created by jzx on 2016/7/29.
  */
 $(document).ready(function () {
-    var groupModalSelector$ = $('#editGroupModal');
-    var groupIdSelector$ = $('#groupIdInput');
-    var groupNameSelector$ = $('#groupNameInput');
-    var groupDescSelector$ = $('#groupDescInput');
+    var group$ = $('#editGroupModal');
+    var groupId$ = $('#groupIdInput');
+    var groupName$ = $('#groupNameInput');
+    var groupDesc$ = $('#groupDescInput');
 
-    groupModalSelector$.on('shown.bs.modal', function (event) {
+    group$.on('shown.bs.modal', function (event) {
         var target = $(event.relatedTarget);
         var groupId = target.data('groupid');
         var groupName = target.data('groupname');
         var groupDesc = target.data('groupdesc');
-        groupIdSelector$.val(groupId);
-        groupNameSelector$.val(groupName);
-        groupDescSelector$.val(groupDesc);
+        groupId$.val(groupId);
+        groupName$.val(groupName);
+        groupDesc$.val(groupDesc);
     });
 
-    groupModalSelector$.on('hidden.bs.modal', function () {
-        groupDescSelector$.val('');
-        groupNameSelector$.val('');
-        groupIdSelector$.val('');
+    group$.on('hidden.bs.modal', function () {
+        groupDesc$.val('');
+        groupName$.val('');
+        groupId$.val('');
     });
 
     $('#groupModalSubmitBtn').click(function () {
         var url = 'group/create';
-        var groupId = groupIdSelector$.val();
+        var groupId = groupId$.val();
         if (!!groupId) {
             url = 'group/update/' + groupId;
         }
         $.post(url, {
-            name: groupNameSelector$.val(),
-            description: groupDescSelector$.val(),
+            name: groupName$.val(),
+            description: groupDesc$.val(),
             project_id: window.projectId
         }, function (data) {
             if (data.success) {
@@ -46,14 +46,16 @@ $(document).ready(function () {
         $('html,body').animate({scrollTop: $('#' + id).offset().top}, 1000)
     });
 
-    var unitModalSelector$ = $('#editUnitModal');
-    var unitModalVM = avalon.define({
+    var unit$ = $('#editUnitModal');
+    var unitVM = avalon.define({
         $id: 'unitModalVM',
         unit: window.emptyUnit,
         request_parameter: window.emptyUnit.request_parameter,
+        success_parameter: window.emptyUnit.success_parameter,
         submit: function () {
-            var data = JSON.parse(JSON.stringify(unitModalVM.unit.$model));
-            data.request_parameter = JSON.parse(JSON.stringify(unitModalVM.request_parameter));
+            var data = zeta.json.transform(unitVM.unit.$model);
+            data.request_parameter = zeta.json.transform(unitVM.request_parameter);
+            data.success_parameter = zeta.json.transform(unitVM.success_parameter);
             var url = 'unit/create';
             if (!!data.id) {
                 url = 'unit/update/' + data.id;
@@ -64,8 +66,13 @@ $(document).ready(function () {
                 }
             });
         },
-        addRequestParameter: function () {
-            unitModalVM.request_parameter.push({field: '', type: '', description: ''});
+        addParam: function (type) {
+            if (!type) {
+                unitVM.request_parameter.push({field: '', type: '', description: ''});
+            }
+            if (type == 'success') {
+                unitVM.success_parameter.push({field: '', type: '', description: ''});
+            }
         },
         validate: {
             onError: function (reasons) {
@@ -79,30 +86,37 @@ $(document).ready(function () {
                 }
             }
         },
-        removeParam: function (index) {
-            unitModalVM.request_parameter.removeAt(index);
+        removeParam: function (index, type) {
+            if (!type) {
+                unitVM.request_parameter.removeAt(index);
+            }
+            if (type == 'success') {
+                unitVM.success_parameter.removeAt(index);
+            }
         }
     });
 
-    var initUnitForUnitModalVM = function (unitId) {
+    var initUnit = function (unitId) {
         $.getJSON('unit/get/' + unitId, function (data) {
-            unitModalVM.unit = data.data;
-            unitModalVM.request_parameter = data.data.request_parameter;
+            unitVM.unit = data.data;
+            unitVM.request_parameter = data.data.request_parameter;
+            unitVM.success_parameter = data.data.success_parameter;
         })
     };
 
-    unitModalSelector$.on('shown.bs.modal', function (event) {
+    unit$.on('shown.bs.modal', function (event) {
         var target = $(event.relatedTarget);
         var unitId = target.data('unitid');
-        unitModalVM.unit.group_id = target.data('groupid');
+        unitVM.unit.group_id = target.data('groupid');
         if (!!unitId) {
-            initUnitForUnitModalVM(unitId);
+            initUnit(unitId);
         }
     });
 
-    unitModalSelector$.on('hidden.bs.modal', function () {
-        unitModalVM.unit = window.emptyUnit;
-        unitModalVM.request_parameter = [];
+    unit$.on('hidden.bs.modal', function () {
+        unitVM.unit = window.emptyUnit;
+        unitVM.request_parameter = [];
+        unitVM.success_parameter = [];
     });
 
     avalon.scan(document.body);

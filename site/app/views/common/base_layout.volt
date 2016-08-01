@@ -27,6 +27,8 @@
 <script src="public/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="public/vendor/lodash/dist/lodash.min.js"></script>
 <script src="public/vendor/avalon/dist/avalon.js"></script>
+
+<script src="public/js/main.js"></script>
 {% block js %}{% endblock %}
 
 </body>
