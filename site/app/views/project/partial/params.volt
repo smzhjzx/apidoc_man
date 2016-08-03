@@ -38,3 +38,5 @@
     </div>
     <!-- /.panel-body -->
 </div>
+
+{% do assets.addJs('js/project/partial/params.js') %}

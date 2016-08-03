@@ -1,5 +1,5 @@
 var zeta = zeta || {};
-zeta.namespace = function (ns, func) {
+zeta.ns = function (ns, func) {
     var object = window;
     var tokens = ns.split('.');
     var token = null;
@@ -18,7 +18,7 @@ zeta.namespace = function (ns, func) {
 };
 
 $(document).ready(function () {
-    zeta.namespace('zeta.json.transform', function (avalonModel) {
+    zeta.ns('zeta.json.transform', function (avalonModel) {
         return JSON.parse(JSON.stringify(avalonModel));
     });
 });

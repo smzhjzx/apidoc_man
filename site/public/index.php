@@ -39,9 +39,9 @@ try {
     $di->set('db', function () {
         return new DbAdapter([
             'host' => 'localhost',
-            'username' => 'root',
-            'password' => 'root',
-            'dbname' => 'apidoc_man'
+            'username' => 'api',
+            'password' => 'api@123',
+            'dbname' => 'api'
         ]);
     });
 
@@ -49,7 +49,7 @@ try {
     $di->set('volt', function ($view, $di) {
         $volt = new Volt($view, $di);
         $volt->setOptions([
-            'compiledPath' => 'D:/xampp/htdocs/apidoc_man/site/app/cache/',
+            'compiledPath' => __DIR__ . '/../app/cache/',
             'stat' => true,
             'compileAlways' => true
         ]);
